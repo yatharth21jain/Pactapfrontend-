@@ -39,6 +39,12 @@ export class JobListComponent {
     this.loginkey = localStorage.getItem('logindata');
 
   }
+  showAlert = false;
+  alertMessage = '';
+
+ 
+
+ 
 
   getcontent() {
     this.contentService.getbanner().subscribe({
@@ -73,21 +79,41 @@ export class JobListComponent {
       this.rescontent = this.termsheading;
     }
   }
-  applyjob(job:any){
+  // applyjob(job:any){
+    // alert()
     // console.log('Applying for job:', job);
-    if(this.loginkey==null){
-      this.uiservice.openSnackbar('Please Login to Apply for Job');
-    }
-    else{
-      let appliedJobs = JSON.parse(localStorage.getItem('appliedJobs') || '[]');
-    appliedJobs.push(job);
-    localStorage.setItem('appliedJobs', JSON.stringify(appliedJobs));
-    this.router.navigate(['applyjob']);
+    // if(this.loginkey==null){
+    //   this.uiservice.openSnackbar('Please Login to Apply for Job');
+    // }
+    // else{
+      // this.showAlert=true
+     
+    // this.router.navigate(['/jobdetail', job.id]);
 
     
   
-    }
+    // }
     
+  // }
+  applyjob(data: any) {
+    // Toggle the showAlert flag for the clicked job
+    data.showAlert = !data.showAlert;
+  }
+
+  // Method to handle file selection
+  onFileSelected(event: any, data: any) {
+    const file = event.target.files[0];
+    console.log('Selected file for job:', data.job_category, file);
+// console.log('Form submitted:', this.myForm.value);
+    let appliedJobs = JSON.parse(localStorage.getItem('appliedJobs') || '[]');
+    appliedJobs.push(data);
+    localStorage.setItem('appliedJobs', JSON.stringify(appliedJobs));
+    this.router.navigate(['/applyjob']);
+  }
+
+  // Method to close the file input (optional, you can decide when you want to close it)
+  closeAlert(data: any) {
+    data.showAlert = false;
   }
   jobdetail(details:any){
     console.log('Job details:', details);

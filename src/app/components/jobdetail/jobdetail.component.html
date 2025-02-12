@@ -55,25 +55,23 @@
     
                   <div class="">
                             <h4 class="mb-4">Apply For The Job</h4>
-                            <form>
+                            <form [formGroup]="myForm" (ngSubmit)="submit()">
                                 <div class="row g-3">
                                     <div class="col-12 col-sm-6">
-                                        <input type="text" class="form-control" placeholder="Your Name">
+                                        <input type="text" class="form-control" placeholder="Your Name"  formControlName="name">
                                     </div>
                                     <div class="col-12 col-sm-6">
-                                        <input type="email" class="form-control" placeholder="Your Email">
+                                        <input type="email" class="form-control" placeholder="Your Email"  formControlName="email">
                                     </div>
+                                   
                                     <div class="col-12 col-sm-6">
-                                        <input type="text" class="form-control" placeholder="Portfolio Website">
-                                    </div>
-                                    <div class="col-12 col-sm-6">
-                                        <input type="file" class="form-control bg-white">
+                                        <input type="file" class="form-control bg-white"  formControlName="resume">
                                     </div>
                                     <div class="col-12">
-                                        <textarea class="form-control" rows="5" placeholder="Coverletter"></textarea>
+                                        <textarea class="form-control" rows="5" placeholder="Coverletter"  formControlName="coverletter"></textarea>
                                     </div>
                                     <div class="col-12">
-                                        <button class="btn btn-primary w-100" type="submit">Apply Now</button>
+                                        <button class="btn btn-primary w-100" type="submit" >Apply Now</button>
                                     </div>
                                 </div>
                             </form>
