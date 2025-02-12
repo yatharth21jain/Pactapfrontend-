@@ -11,35 +11,31 @@ import { UiService } from 'src/app/services/ui.service';
 export class ProfileComponent implements OnInit {
   myForm!: FormGroup;
   isLoading: boolean = false;
-  email: string | null = ''; // To hold the existing email from localStorage
-  imagePreview: string | ArrayBuffer | null = ''; // To hold the image preview URL
-  imageError: string = ''; // To store image error message
-  resumeError: string = ''; // To store resume error message
+  email: string | null = ''; 
+  imagePreview: string | ArrayBuffer | null = ''; 
+  imageError: string = ''; 
+  resumeError: string = ''; 
 
   constructor(
     public fb: FormBuilder,
     public uiservice: UiService,
     public router: Router
   ) {
-    // Retrieve the stored login data from localStorage
     const storedData = localStorage.getItem('logindata');
     if (storedData) {
       const parsedData = JSON.parse(storedData);
-      this.email = parsedData.email; // Store the email to display it and use it for patching
+      this.email = parsedData.email; 
     }
   }
 
   ngOnInit(): void {
-    // Initialize the form
     this.forminit();
     
-    // Patch the form with the existing data (if any)
     if (this.email) {
       const storedProfileData = localStorage.getItem('profiledata');
       if (storedProfileData) {
         const profileData = JSON.parse(storedProfileData);
         
-        // Assuming profileData contains name, mobile, address, etc.
         this.myForm.patchValue({
           name: profileData.name || '',
           mobile: profileData.mobile || '',
@@ -47,8 +43,7 @@ export class ProfileComponent implements OnInit {
           resume: profileData.resume || ''
         });
 
-        // Load the image preview if it exists in localStorage
-        this.imagePreview = profileData.image || ''; // default to empty if no image
+        this.imagePreview = profileData.image || ''; 
       }
     }
   }
@@ -59,7 +54,7 @@ export class ProfileComponent implements OnInit {
       mobile: ['', [Validators.required]],
       address: ['', [Validators.required]],
       resume: ['', [Validators.required]],
-      image: ['', [Validators.required]] // This will be set as Base64
+      image: ['', [Validators.required]] 
     });
   }
 
@@ -79,43 +74,37 @@ export class ProfileComponent implements OnInit {
 
     this.isLoading = true;
 
-    // Create the profile data object
     const profileData = {
-      email: this.email, // existing email
+      email: this.email,
       name: this.myForm.value.name,
       mobile: this.myForm.value.mobile,
       address: this.myForm.value.address,
       resume: this.myForm.value.resume,
-      image: this.imagePreview // Store the image preview URL (Base64 string)
+      image: this.imagePreview 
     };
 
-    // Store the updated profile data in localStorage
     localStorage.setItem('profiledata', JSON.stringify(profileData));
 
     console.log('Profile data updated in localStorage:', profileData);
 
-    // Show success message and navigate (optional)
     this.uiservice.openSnackbar('Profile updated successfully.');
     this.router.navigate(['/']);
   }
 
-  // Handle image file selection and create preview with validation
   onImageSelected(event: Event): void {
     const fileInput = event.target as HTMLInputElement;
     const file = fileInput?.files?.[0];
 
-    this.imageError = ''; // Reset error message
+    this.imageError = ''; 
 
     if (file) {
-      // Validate image type (jpeg/png)
       const validImageTypes = ['image/jpeg', 'image/png'];
       if (!validImageTypes.includes(file.type)) {
         this.imageError = 'Only JPEG and PNG images are allowed.';
         return;
       }
 
-      // Validate image size (max 2MB)
-      const maxSize = 2 * 1024 * 1024; // 2MB in bytes
+      const maxSize = 2 * 1024 * 1024;
       if (file.size > maxSize) {
         this.imageError = 'Image size should not exceed 2MB.';
         return;
@@ -123,23 +112,20 @@ export class ProfileComponent implements OnInit {
 
       const reader = new FileReader();
       reader.onload = () => {
-        // Set the image preview as the result from the reader (which is a data URL)
         this.imagePreview = reader.result;
-        this.myForm.patchValue({ image: reader.result }); // Update the form's image field
+        this.myForm.patchValue({ image: reader.result });
       };
-      reader.readAsDataURL(file); // Read the file as a data URL
+      reader.readAsDataURL(file); 
     }
   }
 
-  // Handle resume file selection with validation
   onResumeSelected(event: Event): void {
     const fileInput = event.target as HTMLInputElement;
     const file = fileInput?.files?.[0];
 
-    this.resumeError = ''; // Reset error message
+    this.resumeError = ''; 
 
     if (file) {
-      // Validate resume type (PDF)
       if (file.type !== 'application/pdf') {
         this.resumeError = 'Only PDF files are allowed for the resume.';
         return;

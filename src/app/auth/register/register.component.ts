@@ -41,17 +41,13 @@ export class RegisterComponent {
     let signupDataArray = [];
   
     if (existingData) {
-      // If data already exists, parse it into an array
       signupDataArray = JSON.parse(existingData);
     }
   
-    // Push the new form data into the array
     signupDataArray.push(this.myForm.value);
   
-    // Store the updated array back in localStorage
     localStorage.setItem('signupdata', JSON.stringify(signupDataArray));
   
-    // Log the updated array
     console.log('Data saved to localStorage:', signupDataArray);
   
     this.isLoading = false;

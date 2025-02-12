@@ -36,7 +36,6 @@ export class LoginComponent {
     const { email, password } = this.myForm.value;
     this.isLoading = true;
 
-    // Retrieve registration data from localStorage
     const registrationData = localStorage.getItem('signupdata');
     if (!registrationData) {
       this.isLoading = false;
@@ -44,10 +43,8 @@ export class LoginComponent {
       return;
     }
 
-    // Parse the registration data (array of registered users)
     const signupDataArray = JSON.parse(registrationData);
 
-    // Check if the email and password match any entry in the registration data
     const user = signupDataArray.find(
       (user: { email: string; password: string }) =>
         user.email === email && user.password === password
@@ -55,14 +52,12 @@ export class LoginComponent {
 
     if (user) {
       localStorage.setItem('logindata',`${JSON.stringify(user)}`)
-      // Login success
       console.log('Login successful');
       this.uiservice.openSnackbar(`Login successful.`);
       const loginkey = localStorage.setItem('loginkey','True');
 
       this.router.navigate(['/']);
     } else {
-      // Login failed (invalid credentials)
       console.log('Invalid credentials');
       this.uiservice.openSnackbar(`Invalid email or password.`);
     }
