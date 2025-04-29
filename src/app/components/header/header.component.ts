@@ -14,7 +14,7 @@ export class HeaderComponent {
   Logout(){
     localStorage.removeItem('loginkey');
     localStorage.removeItem('logindata');
-    // localStorage.removeItem('logindata');
+    localStorage.removeItem('quizQuestions');
     this.loginkey = null;
 
     // console.log('Logged Out');

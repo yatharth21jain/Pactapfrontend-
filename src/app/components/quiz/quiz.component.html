@@ -1,0 +1,50 @@
+<h1 style="margin-left: 500px; color: #6610f2;">Solve the MCQ</h1>
+<div class="container">
+    <form [formGroup]="quizForm" (ngSubmit)="onSubmit()">
+      <mat-card class="quiz-card">
+        <mat-card-title>Quiz Questions</mat-card-title>
+        <mat-card-content>
+          <!-- Loop through all questions in qBank -->
+          <div *ngFor="let q of qBank" class="question">
+            <mat-card class="question-card">
+              <mat-card-title>{{ q.question }}</mat-card-title>
+              <mat-card-content>
+                <!-- Use getFormControl to safely retrieve the control -->
+                <mat-radio-group [formControl]="getFormControl(q.id.toString())" [disabled]="showResults">
+                  <mat-radio-button *ngFor="let option of q.options" [value]="option">
+                    {{ option }}
+                  </mat-radio-button>
+                </mat-radio-group>
+  
+                <!-- Feedback for correct/incorrect answers -->
+                <div *ngIf="showResults" class="feedback">
+                  <p *ngIf="q.selected === q.correctAnswer && q.selected !== ''" class="correct">
+                    ✅ Correct!
+                  </p>
+                  <p *ngIf="q.selected !== q.correctAnswer && q.selected !== ''" class="incorrect">
+                    ❌ Incorrect. <br>
+                    Your Answer: {{ q.selected }} <br>
+                    Correct Answer: {{ q.correctAnswer }}
+                  </p>
+                  <p *ngIf="q.selected === ''" class="skipped">
+                    ⚠️ You skipped this question.
+                  </p>
+                </div>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </mat-card-content>
+  
+        <!-- Submit button -->
+        <mat-card-actions>
+          <button mat-raised-button color="primary" type="submit">Submit</button>
+        </mat-card-actions>
+      </mat-card>
+  
+      <!-- Display final score -->
+      <div *ngIf="showResults" class="score">
+        <h2>Your Score: {{ score }} / {{ qBank.length }}</h2>
+      </div>
+    </form>
+  </div>
+  

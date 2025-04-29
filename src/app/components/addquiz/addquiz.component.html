@@ -1,0 +1,66 @@
+<h1  style="margin-left: 500px; color: #6610f2;">Add the Question</h1>
+<h3  style="margin-left: 500px; color: #f23d10;" >* Each Question Carry 1 Marks.</h3>
+<form [formGroup]="questionForm" (ngSubmit)="submitAllQuestions()">
+    <mat-card>
+      <mat-card-title>Add Quiz Questions</mat-card-title>
+      <mat-card-content formArrayName="questions">
+        <div *ngFor="let group of questions.controls; let i = index" [formGroupName]="i" class="question-form">
+          <mat-form-field appearance="fill">
+            <mat-label>Question {{ i + 1 }}</mat-label>
+            <input matInput formControlName="question" required>
+          </mat-form-field>
+  
+          <div *ngFor="let j of [0,1,2,3]">
+            <mat-form-field appearance="fill">
+              <mat-label>Option {{ j + 1 }}</mat-label>
+              <input matInput [formControlName]="'option' + j" required>
+            </mat-form-field>
+          </div>
+  
+          <mat-form-field appearance="fill">
+            <mat-label>Correct Answer</mat-label>
+            <input matInput formControlName="answer" required>
+          </mat-form-field>
+  
+          <hr />
+        </div>
+  
+        <button mat-icon-button color="primary" (click)="addQuestion()" type="button">
+          <mat-icon>add</mat-icon> Add Question
+        </button>
+      </mat-card-content>
+  
+      <mat-card-actions>
+        <button mat-raised-button color="accent" type="submit">Save Questions </button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+  
+  <!-- <form [formGroup]="quizForm" (ngSubmit)="onSubmit()" *ngIf="qBank.length > 0">
+    <mat-card>
+      <mat-card-title>Quiz</mat-card-title>
+      <mat-card-content>
+        <div *ngFor="let q of qBank">
+          <mat-card>
+            <mat-card-title>{{ q.question }}</mat-card-title>
+            <mat-radio-group [formControlName]="q.id.toString()">
+              <mat-radio-button *ngFor="let opt of q.options" [value]="opt">
+                {{ opt }}
+              </mat-radio-button>
+            </mat-radio-group>
+  
+            <div *ngIf="showResults">
+              <p *ngIf="q.selected === q.answer" class="correct">Correct!</p>
+              <p *ngIf="q.selected !== q.answer" class="incorrect">
+                Incorrect. Correct Answer: {{ q.answer }}
+              </p>
+            </div>
+          </mat-card>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" type="submit">Submit Quiz</button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+   -->

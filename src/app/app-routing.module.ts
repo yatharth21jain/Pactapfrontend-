@@ -4,10 +4,9 @@ import { RegisterComponent } from './auth/register/register.component';
 import { IndexComponent } from './components/index/index.component';
 import { LoginComponent } from './auth/login/login.component';
 import { ProfileComponent } from './components/profile/profile.component';
-import { JobListComponent } from './components/job-list/job-list.component';
-import { ApplyjobComponent } from './components/applyjob/applyjob.component';
-import { JobdetailComponent } from './components/jobdetail/jobdetail.component';
 import { AuthGuard } from './services/auth-guard.service';
+import { QuizComponent } from './components/quiz/quiz.component';
+import { AddquizComponent } from './components/addquiz/addquiz.component';
 
 
 const routes: Routes = [
@@ -28,18 +27,14 @@ const routes: Routes = [
     component:ProfileComponent,
     canActivate: [AuthGuard] 
   },
+  
   {
-    path:'job-list',
-    component:JobListComponent
+    path:'quiz',
+    component:QuizComponent
   },
   {
-    path:'applyjob',
-    component:ApplyjobComponent,
-    canActivate: [AuthGuard] 
-  },
-  {
-    path:'jobdetail/:id',
-    component:JobdetailComponent
+    path:'addquiz',
+    component:AddquizComponent
   }
 ];
 
